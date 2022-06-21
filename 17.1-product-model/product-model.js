@@ -7,17 +7,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/e-commerce-api", {
   useNewUrlParser: true,
 });
 
-const details1 = new Schema({
-  description: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-});
-
 const productSchema = new Schema({
   name: {
     type: String,
@@ -84,10 +73,6 @@ const productSchema = new Schema({
     },
   },
 });
-
-// [
-
-// ],
 
 const Product = mongoose.model("Product", productSchema);
 
