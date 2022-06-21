@@ -27,3 +27,19 @@ export const getRangeProducts = async (body) => {
     ],
   });
 };
+
+export const update = async (id, { isActive, details }) => {
+  return Product.findByIdAndUpdate(
+    id,
+    { isActive: isActive, "details.discount": details.discount },
+    { new: true }
+  );
+};
+
+export const deleteSpecificProduct = async (id) => {
+  return Product.findByIdAndDelete({ _id: id });
+};
+
+export const deleteAll = async () => {
+  return Product.deleteMany({});
+};

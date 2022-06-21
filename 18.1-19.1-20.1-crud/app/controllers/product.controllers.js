@@ -4,6 +4,9 @@ import {
   getSpecificProduct,
   getIsActiveProducts,
   getRangeProducts,
+  deleteAll,
+  deleteSpecificProduct,
+  update,
 } from "../services/product.services.js";
 
 export const createProduct = async (req, res) => {
@@ -60,5 +63,38 @@ export const getProductsRange = async (req, res) => {
     res.send(fetchedProducts);
   } catch (error) {
     res.status(400).send({ error: error.message });
+  }
+};
+
+export const updateProduct = async (req, res) => {
+  try {
+    const updatedProduct = await update(req.params.id, req.body);
+    if (!updatedProduct) {
+      return res.status(404).send({ error: "Product does not exist!" });
+    }
+    res.send(updatedProduct);
+  } catch (error) {
+    res.status(404).send({ error: error.message });
+  }
+};
+
+export const deleteAllProducts = async (req, res) => {
+  try {
+    const deletedProducts = await deleteAll();
+    res.send(deletedProducts);
+  } catch (error) {
+    res.status(404).send({ error: error.message });
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const deletedProduct = await deleteSpecificProduct(req.params.id);
+    if (!deletedProduct) {
+      return res.status(404).send({ error: "Product does not exist!" });
+    }
+    res.send(deletedProduct);
+  } catch (error) {
+    res.status(404).send({ error: error.message });
   }
 };

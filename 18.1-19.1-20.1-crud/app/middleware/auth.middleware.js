@@ -57,3 +57,26 @@ export const authMinMax = (req, res, next) => {
   }
   next();
 };
+
+export const authUpdate = (req, res, next) => {
+  const allowed = ["isActive", "details"];
+  const keys = Object.keys(req.body);
+  const validAllowed = keys.every((key) => allowed.includes(key));
+
+  if (!validAllowed) {
+    return res
+      .status(400)
+      .send({ error: "Can only update isActive or discount" });
+  }
+  if (req.body.details) {
+    const detailAllowed = ["discount"];
+    const detailKeys = Object.keys(req.body.details);
+    const detailValid = detailKeys.every((key) => detailAllowed.includes(key));
+    if (!detailValid) {
+      return res
+        .status(400)
+        .send({ error: "Can only discount within details!" });
+    }
+  }
+  next();
+};
